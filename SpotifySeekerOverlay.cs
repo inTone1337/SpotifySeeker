@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SpotifySeeker
 {
-    public partial class Form1 : Form
+    public partial class SpotifySeekerOverlay : Form
     {
         private IKeyboardMouseEvents keyboardMouseEvents;
         private SpotifyWebAPI spotifyWebAPI;
@@ -18,7 +18,7 @@ namespace SpotifySeeker
         private static System.Timers.Timer timer;
         private const int SeekIncrement = 5000;
 
-        public Form1()
+        public SpotifySeekerOverlay()
         {
             MonitorHorizontalScrolls();
 

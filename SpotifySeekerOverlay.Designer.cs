@@ -1,6 +1,6 @@
 ﻿namespace SpotifySeeker
 {
-    partial class Form1
+    partial class SpotifySeekerOverlay
     {
         /// <summary>
         /// Required designer variable.
@@ -57,7 +57,7 @@
             this.ProgressModifierLabel.TabIndex = 2;
             this.ProgressModifierLabel.Text = "ProgressModifierLabel";
             // 
-            // Form1
+            // SpotifySeekerOverlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -65,8 +65,7 @@
             this.Controls.Add(this.ProgressModifierLabel);
             this.Controls.Add(this.FutureProgressLabel);
             this.Controls.Add(this.CurrentProgressLabel);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "SpotifySeekerOverlay";
             this.ResumeLayout(false);
 
         }
