@@ -66,6 +66,7 @@
             this.Controls.Add(this.FutureProgressLabel);
             this.Controls.Add(this.CurrentProgressLabel);
             this.Name = "SpotifySeekerOverlay";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }
