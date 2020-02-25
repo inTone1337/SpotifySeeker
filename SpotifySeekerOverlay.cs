@@ -55,6 +55,7 @@ namespace SpotifySeeker
         {
             if (e.IsHorizontalScroll)
             {
+                SpotifySeekerOverlaySetOpacity(0.5D);
                 timer.Stop();
                 if (playbackContext == null)
                 {
@@ -76,6 +77,7 @@ namespace SpotifySeeker
         }
 
         delegate void SetTextCallback(string text);
+        delegate void SetOpacityCallback(double opacity);
 
         private void CurrentProgressLabelSetText(string text)
         {
@@ -127,6 +129,20 @@ namespace SpotifySeeker
             CurrentProgressLabelSetText(TimeSpan.FromMilliseconds(playbackContext.ProgressMs).ToString("mm\\:ss"));
             playbackContext = null;
             seekBalance = 0;
+            SpotifySeekerOverlaySetOpacity(0D);
+        }
+
+        private void SpotifySeekerOverlaySetOpacity(double opacity)
+        {
+            if (this.InvokeRequired)
+            {
+                SetOpacityCallback d = new SetOpacityCallback(SpotifySeekerOverlaySetOpacity);
+                this.Invoke(d, new object[] { opacity });
+            }
+            else
+            {
+                this.Opacity = opacity;
+            }
         }
 
         private void SeekWhenReady()
