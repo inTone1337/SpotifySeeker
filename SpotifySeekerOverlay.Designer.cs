@@ -40,32 +40,35 @@ namespace SpotifySeeker
             // 
             // CurrentProgressLabel
             // 
+            this.CurrentProgressLabel.AutoSize = true;
+            this.CurrentProgressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrentProgressLabel.ForeColor = System.Drawing.Color.White;
-            this.CurrentProgressLabel.Location = new System.Drawing.Point(12, 9);
+            this.CurrentProgressLabel.Location = new System.Drawing.Point(10, 10);
             this.CurrentProgressLabel.Name = "CurrentProgressLabel";
-            this.CurrentProgressLabel.Size = new System.Drawing.Size(100, 23);
+            this.CurrentProgressLabel.Size = new System.Drawing.Size(0, 0);
             this.CurrentProgressLabel.TabIndex = 0;
-            this.CurrentProgressLabel.Text = "CurrentProgressLabel";
-            this.CurrentProgressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CurrentProgressLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // FutureProgressLabel
             // 
+            this.FutureProgressLabel.AutoSize = true;
+            this.FutureProgressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FutureProgressLabel.ForeColor = System.Drawing.Color.White;
-            this.FutureProgressLabel.Location = new System.Drawing.Point(224, 9);
+            this.FutureProgressLabel.Location = new System.Drawing.Point(10, 50);
             this.FutureProgressLabel.Name = "FutureProgressLabel";
-            this.FutureProgressLabel.Size = new System.Drawing.Size(100, 23);
+            this.FutureProgressLabel.Size = new System.Drawing.Size(0, 0);
             this.FutureProgressLabel.TabIndex = 1;
-            this.FutureProgressLabel.Text = "FutureProgressLabel";
-            this.FutureProgressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.FutureProgressLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // ProgressModifierLabel
             // 
+            this.ProgressModifierLabel.AutoSize = true;
+            this.ProgressModifierLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ProgressModifierLabel.ForeColor = System.Drawing.Color.White;
-            this.ProgressModifierLabel.Location = new System.Drawing.Point(118, 9);
+            this.ProgressModifierLabel.Location = new System.Drawing.Point(10, 30);
             this.ProgressModifierLabel.Name = "ProgressModifierLabel";
-            this.ProgressModifierLabel.Size = new System.Drawing.Size(100, 23);
+            this.ProgressModifierLabel.Size = new System.Drawing.Size(0, 0);
             this.ProgressModifierLabel.TabIndex = 2;
-            this.ProgressModifierLabel.Text = "ProgressModifierLabel";
             this.ProgressModifierLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // notifyIcon
@@ -78,8 +81,9 @@ namespace SpotifySeeker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(330, 30);
+            this.ClientSize = new System.Drawing.Size(100, 100);
             this.Controls.Add(this.ProgressModifierLabel);
             this.Controls.Add(this.FutureProgressLabel);
             this.Controls.Add(this.CurrentProgressLabel);
@@ -91,6 +95,7 @@ namespace SpotifySeeker
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
