@@ -43,6 +43,13 @@ namespace SpotifySeeker
             SeekWhenReady();
 
             InitializeComponent();
+
+            this.Load += SpotifySeekerOverlay_Load;
+        }
+
+        private void SpotifySeekerOverlay_Load(object sender, EventArgs e)
+        {
+            this.Top = Convert.ToInt32(this.Top * 1.75);
         }
 
         public void MonitorHorizontalScrolls()
