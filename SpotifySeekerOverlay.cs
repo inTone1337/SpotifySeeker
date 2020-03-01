@@ -62,11 +62,19 @@ namespace SpotifySeeker
         {
             if (e.IsHorizontalScroll)
             {
-                SpotifySeekerOverlaySetOpacity(0.5D);
                 timer.Stop();
+                SpotifySeekerOverlaySetOpacity(0.5D);
                 if (playbackContext == null)
                 {
                     playbackContext = spotifyWebAPI.GetPlayback();
+                    String currentTrackArtists = null;
+                    foreach (SimpleArtist simpleArtist in playbackContext.Item.Artists)
+                    {
+                        currentTrackArtists += simpleArtist.Name + ", ";
+                    }
+                    currentTrackArtists = currentTrackArtists.TrimEnd(", ".ToCharArray());
+                    String currentTrackName = playbackContext.Item.Name;
+                    CurrentTrackLabelSetText(currentTrackArtists + " - " + currentTrackName);
                     CurrentProgressLabelSetText(TimeSpan.FromMilliseconds(playbackContext.ProgressMs).ToString("mm\\:ss"));
                 }
                 if (e.Delta > 0)
@@ -85,6 +93,19 @@ namespace SpotifySeeker
 
         delegate void SetTextCallback(string text);
         delegate void SetOpacityCallback(double opacity);
+
+        private void CurrentTrackLabelSetText(string text)
+        {
+            if (this.CurrentTrackLabel.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(CurrentTrackLabelSetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.CurrentTrackLabel.Text = text;
+            }
+        }
 
         private void CurrentProgressLabelSetText(string text)
         {
