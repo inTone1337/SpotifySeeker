@@ -20,31 +20,36 @@ namespace SpotifySeeker
 
         public SpotifySeekerOverlay()
         {
-            MonitorHorizontalScrolls();
+            AuthenticateSpotify();
 
-            ImplicitGrantAuth auth = new ImplicitGrantAuth(
-              "775e0a0f3be94bf5aa8c9a9578cfe5c8",
-              "http://localhost:4002",
-              "http://localhost:4002",
-              Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState
-            );
-            auth.AuthReceived += async (sender, payload) =>
-            {
-                auth.Stop();
-                spotifyWebAPI = new SpotifyWebAPI()
-                {
-                    TokenType = payload.TokenType,
-                    AccessToken = payload.AccessToken
-                };
-            };
-            auth.Start();
-            auth.OpenBrowser();
+            MonitorHorizontalScrolls();
 
             SeekWhenReady();
 
             InitializeComponent();
 
             this.Load += SpotifySeekerOverlay_Load;
+        }
+
+        private void AuthenticateSpotify()
+        {
+            TokenSwapWebAPIFactory webApiFactory;
+            SpotifyWebAPI spotify;
+
+            webApiFactory = new TokenSwapWebAPIFactory("")
+            {
+                Scope = Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
+                AutoRefresh = true
+            };
+            // webApiFactory.OnAccessTokenExpired += (sender, e) => authorized = false;
+
+            try
+            {
+                spotify = webApiFactory.GetWebApiAsync().Result;
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private void SpotifySeekerOverlay_Load(object sender, EventArgs e)
