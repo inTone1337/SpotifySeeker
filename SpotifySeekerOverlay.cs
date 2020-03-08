@@ -36,7 +36,7 @@ namespace SpotifySeeker
             TokenSwapWebAPIFactory webApiFactory;
             SpotifyWebAPI spotify;
 
-            webApiFactory = new TokenSwapWebAPIFactory("")
+            webApiFactory = new TokenSwapWebAPIFactory("https://intone.me/spotify-seeker-auth")
             {
                 Scope = Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
                 AutoRefresh = true
