@@ -21,14 +21,10 @@ namespace SpotifySeeker
         public SpotifySeekerOverlay()
         {
             AuthenticateSpotify();
-
-            MonitorHorizontalScrolls();
-
-            SeekWhenReady();
-
             InitializeComponent();
 
-            this.Load += SpotifySeekerOverlay_Load;
+            //Lower the position of the overlay on load (need a more elegant way for this)
+            this.Load += MoveSpotifySeekerOverlay;
         }
 
         private void AuthenticateSpotify()
@@ -41,6 +37,7 @@ namespace SpotifySeeker
                 Scope = Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
                 AutoRefresh = true
             };
+            webApiFactory.OnAuthSuccess += (sender, e) => StartSpotifySeekerLogic();
             // webApiFactory.OnAccessTokenExpired += (sender, e) => authorized = false;
 
             try
@@ -52,7 +49,13 @@ namespace SpotifySeeker
             }
         }
 
-        private void SpotifySeekerOverlay_Load(object sender, EventArgs e)
+        private void StartSpotifySeekerLogic()
+        {
+            MonitorHorizontalScrolls();
+            SeekWhenReady();
+        }
+
+        private void MoveSpotifySeekerOverlay(object sender, EventArgs e)
         {
             this.Top = Convert.ToInt32(this.Top * 1.75);
         }
