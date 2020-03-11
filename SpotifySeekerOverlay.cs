@@ -23,7 +23,7 @@ namespace SpotifySeeker
             AuthenticateSpotify();
             InitializeComponent();
 
-            //Lower the position of the overlay on load (need a more elegant way for this)
+            //TODO: Lower the position of the overlay on load (need a more elegant way for this).
             this.Load += MoveSpotifySeekerOverlay;
         }
 
@@ -32,7 +32,7 @@ namespace SpotifySeeker
             TokenSwapWebAPIFactory webApiFactory;
             SpotifyWebAPI spotify;
 
-            webApiFactory = new TokenSwapWebAPIFactory("https://intone.me/spotify-seeker-auth")
+            webApiFactory = new TokenSwapWebAPIFactory("")
             {
                 Scope = Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
                 AutoRefresh = true
