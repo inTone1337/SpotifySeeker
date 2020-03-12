@@ -29,20 +29,19 @@ namespace SpotifySeeker
 
         private void AuthenticateSpotify()
         {
-            TokenSwapWebAPIFactory webApiFactory;
-            SpotifyWebAPI spotify;
+            TokenSwapWebAPIFactory tokenSwapWebAPIFactory;
 
-            webApiFactory = new TokenSwapWebAPIFactory("")
+            tokenSwapWebAPIFactory = new TokenSwapWebAPIFactory("")
             {
                 Scope = Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
                 AutoRefresh = true
             };
-            webApiFactory.OnAuthSuccess += (sender, e) => StartSpotifySeekerLogic();
+            tokenSwapWebAPIFactory.OnAuthSuccess += (sender, e) => StartSpotifySeekerLogic();
             // webApiFactory.OnAccessTokenExpired += (sender, e) => authorized = false;
 
             try
             {
-                spotify = webApiFactory.GetWebApiAsync().Result;
+                spotifyWebAPI = tokenSwapWebAPIFactory.GetWebApiAsync().Result;
             }
             catch (Exception ex)
             {
