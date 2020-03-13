@@ -11,11 +11,11 @@ namespace SpotifySeeker
 {
     public partial class SpotifySeekerOverlay : Form
     {
-        private IKeyboardMouseEvents keyboardMouseEvents;
         private SpotifyWebAPI spotifyWebAPI;
+        private IKeyboardMouseEvents keyboardMouseEvents;
+        private static System.Timers.Timer timer;
         private PlaybackContext playbackContext;
         private int seekBalance = 0;
-        private static System.Timers.Timer timer;
         private const int SeekIncrement = 5000;
 
         public SpotifySeekerOverlay()
@@ -31,13 +31,14 @@ namespace SpotifySeeker
         {
             TokenSwapWebAPIFactory tokenSwapWebAPIFactory;
 
+            //TODO: Reference token swap server when ready.
             tokenSwapWebAPIFactory = new TokenSwapWebAPIFactory("")
             {
                 Scope = Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
                 AutoRefresh = true
             };
             tokenSwapWebAPIFactory.OnAuthSuccess += (sender, e) => StartSpotifySeekerLogic();
-            // webApiFactory.OnAccessTokenExpired += (sender, e) => authorized = false;
+            //tokenSwapWebAPIFactory.OnAccessTokenExpired += (sender, e) => authorized = false;
 
             try
             {
@@ -45,6 +46,7 @@ namespace SpotifySeeker
             }
             catch (Exception ex)
             {
+                //TODO: Handle exception handling.
             }
         }
 
@@ -52,11 +54,6 @@ namespace SpotifySeeker
         {
             MonitorHorizontalScrolls();
             SeekWhenReady();
-        }
-
-        private void MoveSpotifySeekerOverlay(object sender, EventArgs e)
-        {
-            this.Top = Convert.ToInt32(this.Top * 1.75);
         }
 
         public void MonitorHorizontalScrolls()
@@ -101,6 +98,19 @@ namespace SpotifySeeker
         delegate void SetTextCallback(string text);
         delegate void SetOpacityCallback(double opacity);
 
+        private void SpotifySeekerOverlaySetOpacity(double opacity)
+        {
+            if (this.InvokeRequired)
+            {
+                SetOpacityCallback d = new SetOpacityCallback(SpotifySeekerOverlaySetOpacity);
+                this.Invoke(d, new object[] { opacity });
+            }
+            else
+            {
+                this.Opacity = opacity;
+            }
+        }
+
         private void CurrentTrackLabelSetText(string text)
         {
             if (this.CurrentTrackLabel.InvokeRequired)
@@ -127,6 +137,19 @@ namespace SpotifySeeker
             }
         }
 
+        private void ProgressModifierLabelSetText(string text)
+        {
+            if (this.ProgressModifierLabel.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(ProgressModifierLabelSetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.ProgressModifierLabel.Text = text;
+            }
+        }
+
         private void FutureProgressLabelSetText(string text)
         {
             if (this.FutureProgressLabel.InvokeRequired)
@@ -140,17 +163,11 @@ namespace SpotifySeeker
             }
         }
 
-        private void ProgressModifierLabelSetText(string text)
+        private void SeekWhenReady()
         {
-            if (this.ProgressModifierLabel.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(ProgressModifierLabelSetText);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                this.ProgressModifierLabel.Text = text;
-            }
+            timer = new System.Timers.Timer(500);
+            timer.AutoReset = false;
+            timer.Elapsed += SeekPlayback;
         }
 
         private void SeekPlayback(object sender, ElapsedEventArgs e)
@@ -167,24 +184,9 @@ namespace SpotifySeeker
             SpotifySeekerOverlaySetOpacity(0D);
         }
 
-        private void SpotifySeekerOverlaySetOpacity(double opacity)
+        private void MoveSpotifySeekerOverlay(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
-            {
-                SetOpacityCallback d = new SetOpacityCallback(SpotifySeekerOverlaySetOpacity);
-                this.Invoke(d, new object[] { opacity });
-            }
-            else
-            {
-                this.Opacity = opacity;
-            }
-        }
-
-        private void SeekWhenReady()
-        {
-            timer = new System.Timers.Timer(500);
-            timer.AutoReset = false;
-            timer.Elapsed += SeekPlayback;
+            this.Top = Convert.ToInt32(this.Top * 1.75);
         }
     }
 }
