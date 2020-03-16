@@ -95,7 +95,6 @@ namespace SpotifySeeker
             }
         }
 
-        delegate void SetTextCallback(string text);
         delegate void SetOpacityCallback(double opacity);
 
         private void SpotifySeekerOverlaySetOpacity(double opacity)
@@ -110,6 +109,8 @@ namespace SpotifySeeker
                 this.Opacity = opacity;
             }
         }
+
+        delegate void SetTextCallback(string text);
 
         private void CurrentTrackLabelSetText(string text)
         {
