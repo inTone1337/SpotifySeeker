@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIKeys.cs" />
     <Compile Include="SpotifySeekerOverlay.cs">
       <SubType>Form</SubType>
     </Compile>

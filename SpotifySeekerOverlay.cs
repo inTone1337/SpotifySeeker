@@ -23,31 +23,30 @@ namespace SpotifySeeker
             AuthenticateSpotify();
             InitializeComponent();
 
-            //TODO: Lower the position of the overlay on load (need a more elegant way for this).
+            // TODO: Lower the position of the overlay on load (need a more elegant way for this).
             this.Load += MoveSpotifySeekerOverlay;
         }
 
         private void AuthenticateSpotify()
         {
-            TokenSwapWebAPIFactory tokenSwapWebAPIFactory;
-
-            //TODO: Reference token swap server when ready.
-            tokenSwapWebAPIFactory = new TokenSwapWebAPIFactory("")
+            ImplicitGrantAuth auth = new ImplicitGrantAuth(
+              APIKeys.spotifyClientID,
+              "http://localhost:4002",
+              "http://localhost:4002",
+              Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState
+            );
+            auth.AuthReceived += async (sender, payload) =>
             {
-                Scope = Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
-                AutoRefresh = true
+                auth.Stop();
+                spotifyWebAPI = new SpotifyWebAPI()
+                {
+                    TokenType = payload.TokenType,
+                    AccessToken = payload.AccessToken
+                };
             };
-            tokenSwapWebAPIFactory.OnAuthSuccess += (sender, e) => StartSpotifySeekerLogic();
-            //tokenSwapWebAPIFactory.OnAccessTokenExpired += (sender, e) => authorized = false;
-
-            try
-            {
-                spotifyWebAPI = tokenSwapWebAPIFactory.GetWebApiAsync().Result;
-            }
-            catch (Exception ex)
-            {
-                //TODO: Handle exception handling.
-            }
+            auth.Start();
+            auth.OpenBrowser();
+            StartSpotifySeekerLogic();
         }
 
         private void StartSpotifySeekerLogic()
@@ -67,7 +66,7 @@ namespace SpotifySeeker
             if (e.IsHorizontalScroll)
             {
                 timer.Stop();
-                SpotifySeekerOverlaySetOpacity(0.5D);
+                SpotifySeekerOverlaySetOpacity(0.75D);
                 if (playbackContext == null)
                 {
                     playbackContext = spotifyWebAPI.GetPlayback();
